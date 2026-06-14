@@ -1,0 +1,34 @@
+{
+  "name": "nogap",
+  "version": "1.8.1",
+  "description": "AI-powered job search pipeline built on Claude Code",
+  "scripts": {
+    "doctor": "node doctor.mjs",
+    "sync-check": "node cv-sync-check.mjs",
+    "update:check": "node update-system.mjs check",
+    "update": "node update-system.mjs apply",
+    "rollback": "node update-system.mjs rollback"
+  },
+  "keywords": [
+    "ai",
+    "job-search",
+    "claude-code",
+    "career",
+    "nogap",
+    "careerops",
+    "automation"
+  ],
+  "author": "NOgap contributors",
+  "homepage": "https://github.com/Claudyahhh/NOgap",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Claudyahhh/NOgap"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "dotenv": "^17.0.0",
+    "js-yaml": "^4.1.1",
+    "playwright": "^1.58.1"
+  }
+}
