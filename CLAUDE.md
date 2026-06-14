@@ -1,6 +1,6 @@
 # NOgap — AI 求职成长助手
 
-基于 career-ops 开源项目改造的个人求职工具，面向中国 18-30 岁职业探索期年轻人，定位从"批量投递执行工具"重新设计为"求职成长闭环"。
+面向零正职工作经验的年轻人，帮助和陪伴他们消除与理想工作之间的 gap。
 
 ## 数据契约（关键）
 
@@ -15,19 +15,6 @@
 - `CLAUDE.md`, `*.mjs` 脚本
 
 **铁律：用户要自定义任何内容（定位、偏好、策略），写入 `modes/_profile.md` 或 `config/profile.yml`，绝不修改 `modes/_shared.md`。**
-
----
-
-## 更新检查
-
-每次会话第一条消息时，静默运行：
-
-```bash
-node update-system.mjs check
-```
-
-- `{"status": "update-available", ...}` → 告知用户有更新，询问是否应用
-- 其他状态 → 不说任何话
 
 ---
 
@@ -155,7 +142,6 @@ node update-system.mjs check
 | 面试前备战 | `interview-prep` |
 | 要准备面试现场展示 | `interview-strategy` |
 | 面试结束后复盘 | `interview-review` |
-| 要更新系统 | `update` |
 
 ---
 

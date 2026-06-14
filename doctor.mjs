@@ -30,17 +30,6 @@ function checkNodeVersion() {
   };
 }
 
-function checkDependencies() {
-  if (existsSync(join(projectRoot, 'node_modules'))) {
-    return { pass: true, label: 'Dependencies installed' };
-  }
-  return {
-    pass: false,
-    label: 'Dependencies not installed',
-    fix: 'Run: npm install',
-  };
-}
-
 function checkCv() {
   if (existsSync(join(projectRoot, 'cv.md'))) {
     return { pass: true, label: 'cv.md found' };
@@ -125,7 +114,6 @@ async function main() {
 
   const checks = [
     checkNodeVersion(),
-    checkDependencies(),
     checkNogapSkill(),
     checkModeFile('brief'),
     checkModeFile('cv-tailor'),

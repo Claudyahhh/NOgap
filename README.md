@@ -1,367 +1,194 @@
-# NOgap — AI 求职成长助手
+# NOgap
 
-> 基于 [career-ops](https://github.com/santifer/career-ops) 改造的个人 AI 求职工具。
-> 面向零正职工作经验的年轻人，帮助和陪伴他们消除与理想工作之间的 gap。
+[中文](README.md) | [English](README.en.md)
 
----
+> 面向中文求职语境下零正职工作经验的年轻人，帮助和陪伴他们消除与理想工作之间的 gap。
 
-## 这是什么
+NOgap 是一个运行在本地、由 Claude Code 驱动的 AI 求职成长系统。它不是批量投递工具，而是一套围绕真实岗位持续评估、行动和复盘的求职成长闭环。
 
-NOgap 是一个跑在本地、由 Claude Code 驱动的 AI 求职成长系统。它面向零正职工作经验的年轻人，通过持续评估、行动和复盘，帮助和陪伴他们消除与理想工作之间的 gap。你把 JD 粘贴进来，它会陪你完成六件事：
+当前版本优先适配中国大陆的招聘信息、简历表达、求职阶段和面试语境。面向英语国家的独立版本在后续规划中。
 
-1. **评估这个岗位** — 匹配度分析 + 评分，给出"值不值得投"的判断
-2. **改写你的简历** — 针对这个 JD 逐条定制，每条改写有原文溯源
-3. **分析能力缺口** — 告诉你真正缺什么、怎么补，直接找到最好的教程
-4. **准备面试** — 公司实时调研 + 针对你的个性化问题预测 + STAR 故事拆解
-5. **生成展示材料** — 100 字口播自我介绍 + 可共享屏幕的 HTML 展示网页
-6. **复盘每次面试** — 五维度诊断，发现的新缺口自动回流进下次分析
+## 它解决什么问题
 
-每一步的输出都存成文件，按 JD 编号对齐，可以随时回头查。
+对零正职经验的年轻人来说，困难通常不只是“不会写简历”，而是：
 
-**这不是批量投递工具。** 评分低于 3.5/5，系统会明确建议不投。精准投 5 家，比无差别投 50 家更值得。
+- 不知道一个岗位是否真的适合自己
+- 分不清表达问题和真实能力缺口
+- 不知道该先补什么、补到什么程度
+- 面试准备分散，失败后也没有形成积累
 
----
+NOgap 把这些问题连接成一个完整流程：
 
-## 先决条件
+```text
+岗位评估
+   ↓
+简历定制 + 能力补齐
+   ↓
+面试准备 + 现场展示
+   ↓
+面试复盘
+   ↓
+新缺口回流到下一轮行动
+```
 
-| 工具 | 用途 | 获取 |
-|------|------|------|
-| **Claude Code** | 系统运行的宿主环境 | [claude.ai/code](https://claude.ai/code) |
-| **Anthropic 账号** | Claude Code 需要（Pro / Max 订阅或 API key） | [anthropic.com](https://anthropic.com) |
-| **Git** | 克隆仓库 | 系统自带或 [git-scm.com](https://git-scm.com) |
-| **Node.js ≥ 18** | 系统更新检查脚本 | [nodejs.org](https://nodejs.org) |
+## 六个核心 Mode
 
-> Claude Code 目前支持 macOS / Linux / Windows（WSL）。
+| Mode | 作用 | 主要输出 |
+|------|------|----------|
+| `brief` | 判断岗位是否值得投入 | 岗位概览、简历匹配度、初步 gap、评分 |
+| `cv-tailor` | 针对 JD 重写简历 | 定级分析、人才画像、逐条改写、事实依据 |
+| `gap-roadmap` | 识别并补齐真实能力缺口 | 四象限优先级、具体行动、优质教程 |
+| `interview-prep` | 准备即将到来的面试 | 公司调研、问题预测、备考清单、STAR 拆解 |
+| `interview-strategy` | 组织面试现场的自我展示 | 口播自我介绍、可共享屏幕的 HTML 页面 |
+| `interview-review` | 从真实面试中学习 | 五维复盘、新缺口、下一次改进动作 |
 
----
+每个 Mode 都会生成独立 Markdown 文档。同一 JD 的所有输出共享一个三位数字编号，从 `000` 开始。
 
-## 安装
+## 快速开始
+
+### 环境要求
+
+- [Claude Code](https://claude.ai/code)
+- Anthropic 账号或可用的 API 凭据
+- Git
+- Node.js 18 或更高版本
+
+### 安装
 
 ```bash
-# 1. 克隆仓库到本地
 git clone https://github.com/Claudyahhh/NOgap.git
 cd NOgap
-
-# 2. 安装依赖（仅系统更新检查脚本需要）
-npm install
-
-# 3. 在 Claude Code 中打开这个目录
 claude
 ```
 
-Claude Code 启动后会自动识别 `.agents/skills/nogap/SKILL.md`，`/nogap` 命令随即可用。
+在 Claude Code 中输入：
 
----
-
-## 初始化（第一次使用）
-
-**你不需要手动配置任何文件。** 第一次启动后，直接在 Claude Code 里说任何话，系统会自动检测缺失的文件并引导你完成初始化。整个过程是对话式的：
-
----
-
-### 第一步：录入简历
-
-系统检测到 `cv.md` 不存在时，会问你：
-
-```
-还没有你的简历。你可以：
-1. 直接粘贴简历（Word / PDF 复制出来的文字都行），我来转成 Markdown
-2. 告诉我你的经历，我来帮你起草
-
-选哪种？
+```text
+/nogap
 ```
 
-**两种方式都可以。** 最终 `cv.md` 是你在整个系统里唯一的简历事实源——所有改写都基于这里的内容，任何时候都可以更新它。
+也可以直接粘贴一份 JD，系统会自动进入 `brief`。
 
-> `cv.md` 的格式没有严格要求，按经历时间线组织即可。系统会实时读取，不做缓存。
+完成首次初始化后，可以运行：
 
----
-
-### 第二步：填写基本偏好
-
-系统会把 `config/profile.example.yml` 复制成 `config/profile.yml`，然后问你几个问题：
-
-```
-需要几个信息来个性化系统：
-- 你的姓名和邮箱
-- 目标岗位类型（如：AI 产品经理实习、AI 战略实习）
-- 求职阶段（实习 / 校招 / 社招）
-- 偏好城市
+```bash
+node doctor.mjs
 ```
 
-填完后 `config/profile.yml` 会写入你提供的信息。这个文件控制评估时的权重和优先级。你随时可以改它，比如求职阶段从实习升级到校招、换目标城市等。
+检查个人文件和系统目录是否完整。
 
----
+## 第一次使用
 
-### 第三步：系统了解你
+NOgap 会检查三个个人文件：
 
-基础文件就绪后，系统会主动问几个问题来提升后续所有输出的质量：
+| 文件 | 用途 |
+|------|------|
+| `cv.md` | 唯一简历事实源 |
+| `config/profile.yml` | 目标岗位、求职阶段、地点等基础偏好 |
+| `modes/_profile.md` | 个人优势、叙事策略、拒绝条件和写作风格 |
 
-```
-产出质量取决于我对你了解的深度，能告诉我：
-- 你最突出的优势是什么？别人没有但你有的？
-- 什么样的工作让你有能量？什么让你觉得没意思？
-- 有没有硬性拒绝条件？（如不考虑非北上广、不去外企等）
-- 最拿得出手的一段经历是什么？
-```
+如果文件缺失，系统会通过对话引导你创建。你可以直接粘贴现有简历，也可以让系统根据你的经历起草。
 
-你的回答会被写入 `modes/_profile.md`（你的个人策略文件）。这个文件越丰富，评估和改写就越个性化。
+初始化完成后，直接粘贴目标 JD 即可开始。
 
----
+## 常用命令
 
-### 完成
-
-```
-已就绪。直接粘贴 JD 开始评估，或用 /nogap 查看所有命令。
-```
-
----
-
-## 日常使用
-
-### 最简单的方式
-
-在 Claude Code 里，**直接粘贴一段 JD 文本**，系统自动识别并启动评估。
-
-### 显式调用
-
-```
-/nogap              → 查看所有命令和当前状态
-/nogap brief        → 粘贴 JD，开始岗位评估
-/nogap cv-tailor    → 针对 JD 改写简历
-/nogap gap-roadmap  → 分析能力缺口
-/nogap interview-prep     → 面试前备战
-/nogap interview-strategy → 面试现场展示方案
-/nogap interview-review   → 面试后复盘
-```
-
-### 指定 JD 编号
-
-每个 JD 首次进入系统时会分配三位数编号（从 `000` 开始）。对同一个 JD 运行后续 mode 时，用编号告诉系统哪个 JD：
-
-```
+```text
+/nogap
+/nogap brief
 /nogap cv-tailor #000
 /nogap gap-roadmap #000
 /nogap interview-prep #000
+/nogap interview-strategy #000
+/nogap interview-review #000
 ```
 
----
+`#000` 指向该 JD 的统一编号。后续 Mode 会通过编号读取同一岗位的上下文。
 
-## 六个 Mode 详解
+## 信息如何流动
 
-### `brief` — 岗位快速评估
-
-粘贴 JD 后，输出两个模块：
-
-- **A 模块 — 岗位概览：** 岗位类型（archetype）、职级、远程政策、一句话概括
-- **B 模块 — 与简历的匹配度：** JD 每条要求 → 映射到你简历里的具体内容；差距逐条分析（是硬门槛还是加分项？有没有替代经历？具体怎么应对？）
-
-评分 1-5 分。低于 3.5 明确建议不投。
-
-评估完成后，结论（archetype、人才画像、gap 列表、评分）会写入 `JDlist/{###}.md`，供后续所有 mode 直接读取，不重复分析 JD。
-
----
-
-### `cv-tailor` — 简历定制改写
-
-针对目标 JD，从职业规划师视角改写你的全部经历，分四个部分：
-
-- **定级分析：** 你和 JD 要求的职级差距在哪？如何用"成长型"叙事切入？
-- **JD 人才画像：** 这个岗位真正想要什么样的人，差异化机会窗口在哪
-- **经历分类：** 每段经历标注"直接相关 / 间接相关 / 背景性重要"
-- **逐条改写：** 全部经历改写，每条附原文出处（事实依据安全锁）
-
-**改写边界：** 可以换角度、植入 JD 关键词、建立可迁移联系；不能编造数字、项目、合作方。面试官追问"能详细说说吗"，你必须能完整回答。
-
----
-
-### `gap-roadmap` — 能力缺口四象限
-
-诚实指出简历改写遮盖不住的真实能力缺口，并给出可执行的补齐方案。
-
-**四象限：**
-
-| | 补齐成本：低 | 补齐成本：高 |
-|--|------------|------------|
-| **影响度：高** | 🔥 立刻做（投递前完成） | 📅 规划长线（启动但不急） |
-| **影响度：低** | 🆓 顺手做 | ❌ 暂时忽略 |
-
-每条 🔥 和 📅 行动附带 **WebSearch 实时找到的最佳教程**（B 站播放量、GitHub stars、权威频道），直接给链接，不让你自己找。
-
----
-
-### `interview-prep` — 面试前备战
-
-面试前运行，生成四个模块：
-
-1. **公司调研速读卡：** WebSearch 实时搜索公司现状、所在业务线、面试风格、近期负面信号（5-8 条，每条标来源）
-2. **问题预测（四板块）：** 行业底层认知、行业趋势发展、个人技能边界、项目实操决策——每道题说明"面试官为什么问这题""答好了证明什么"
-3. **P0-P2 备考清单：** 面试前必须完成的具体行动，带步骤和预估耗时
-4. **STAR 拆解：** 从你的经历中筛出最贴切的 5 段，完整拆解背景 / 任务 / 行动 / 结果 / 复盘
-
----
-
-### `interview-strategy` — 面试现场展示
-
-面试当天用的两样东西：
-
-- **100 字口播自我介绍：** 口语化，可以直接背，踩中 JD 最看重的 2-3 个点，所有内容溯源到 cv.md
-- **可共享屏幕的 HTML 展示网页：** 单文件，浏览器直接打开，关键数字加粗高亮，展示顺序跟自我介绍对齐，让你顺着往下讲
-
----
-
-### `interview-review` — 面试后复盘
-
-粘贴面试文字稿（录音转写），五个维度逐条诊断：
-
-1. **回答结构** — 有没有清晰的叙述框架（STAR / 金字塔等）
-2. **内容质量与真实性** — 核对面试中说的数字和经历是否与 cv.md 一致
-3. **岗位匹配度** — JD 核心要求哪些被提到了，哪些被遗漏了
-4. **暴露的能力缺口** — 停顿、答非所问、主动承认不会的地方
-5. **沟通表达** — 冗长、跑题、口头禅等具体问题
-
-**每条诊断必须引用原文**，不写没有依据的空话。
-
-新发现的缺口自动写入 `data/gap-backlog.md`，下次跑 `gap-roadmap` 时会提示是否并入分析。
-
----
-
-## Mode 之间的数据流
-
-```
-用户粘贴 JD
-     ↓
-  JDlist/{###}.md  ← 编号在这里分配，JD 原文存档，brief 运行后写入分析结论
-     ↓
-  brief/{###}.md   ← A+B 评估、评分、gap 初步识别
-
-     ↓                          ↓
-cv-tailor/{###}.md         gap-roadmap/{###}.md
-（读 JDlist 人才画像）      （读 brief gap 列表）
-     ↓                          ↓
-            interview-prep/{###}.md
-            （读 brief + gap-roadmap，两者合并）
-                   ↓
-     interview-strategy/{###}.md
-     （读 JDlist 人才画像 + cv-tailor 改写经历）
-                   ↓
-     interview-review/{###}.md
-     （读 brief 差距分析 + interview-prep 备考计划）
-                   ↓
-          data/gap-backlog.md
-          （新发现的缺口，下次 gap-roadmap 时并入）
+```text
+JDlist/000-*.md
+  保存 JD 原文、岗位画像、初步 gap 和评分
+          │
+          ▼
+brief/000-*.md
+          │
+          ├──────────────┐
+          ▼              ▼
+cv-tailor/          gap-roadmap/
+          │              │
+          └──────┬───────┘
+                 ▼
+         interview-prep/
+                 ▼
+       interview-strategy/
+                 ▼
+        interview-review/
+                 ▼
+       data/gap-backlog.md
+                 │
+                 └── 回流到下一次 gap-roadmap
 ```
 
-**依赖关系说明：**
+### 依赖机制
 
-每个 mode 启动时会检查上游文件是否存在：
-- **强依赖缺失** → 系统停下，告诉你先去跑哪个 mode
-- **弱依赖缺失** → 继续运行，标注"降级模式"，提示补做
+- 强依赖缺失：停止执行，并提示先运行哪个 Mode
+- 弱依赖缺失：允许降级执行，同时说明缺少的上下文
+- 每个 Mode 完成后：提示最合理的下一步
 
-建议顺序（可跳步，但会有提示）：
+这让单独使用某个 Mode 成为可能，也避免用户在缺少关键上游分析时得到看似完整、实际失真的结果。
 
-```
-brief → cv-tailor / gap-roadmap → interview-prep → interview-strategy → interview-review
-```
+## 核心原则
 
----
+### 真实性
 
-## 文件结构
+`cv.md` 是唯一事实源。简历改写可以调整角度和语言，但不能编造数字、项目、职责或合作方。每条关键改写都应能追溯到真实经历。
 
-```
-nogap/
-├── cv.md                          # 你的简历（唯一事实源）
-├── config/
-│   ├── profile.yml                # 你的偏好配置（从 profile.example.yml 复制）
-│   └── profile.example.yml        # 配置模板
-├── modes/
-│   ├── _profile.md                # 你的个人定位策略（从 _profile.template.md 复制）
-│   ├── _profile.template.md       # 策略模板
-│   ├── _shared.md                 # 系统规则（不要修改）
-│   ├── brief.md                   # brief mode 指令
-│   ├── cv-tailor.md               # cv-tailor mode 指令
-│   ├── gap-roadmap.md             # gap-roadmap mode 指令
-│   ├── interview-prep.md          # interview-prep mode 指令
-│   ├── interview-strategy.md      # interview-strategy mode 指令
-│   └── interview-review.md        # interview-review mode 指令
-├── JDlist/                        # JD 原文存档 + 系统分析结论
-├── brief/                         # 岗位快速评估报告
-├── cv-tailor/                     # 简历定制改写报告
-├── gap-roadmap/                   # 能力缺口分析报告
-├── interview-prep/                # 面试备战报告
-├── interview-strategy/            # 展示方案说明
-├── interview-review/              # 面试复盘报告
-├── output/                        # 生成的 HTML 展示网页
-├── data/
-│   ├── applications.md            # 投递记录追踪表
-│   └── gap-backlog.md             # 面试复盘回流的新缺口
-└── .agents/skills/nogap/
-    └── SKILL.md                   # Claude Code skill 入口（勿修改）
+### 区分表达 gap 与能力 gap
+
+- 表达 gap：有相关经历，但没有写清楚，由 `cv-tailor` 处理
+- 能力 gap：确实不会或没有做过，由 `gap-roadmap` 处理
+
+### 质量优先
+
+NOgap 不代替用户提交申请，也不鼓励无差别投递。系统的目标是帮助用户把时间投入更匹配、更真实的机会。
+
+### 复盘回流
+
+面试中暴露的新问题会进入 `data/gap-backlog.md`，成为后续学习路径和面试准备的新输入。
+
+## 输出目录
+
+```text
+JDlist/               JD 原文与共享上下文
+brief/                岗位快速评估
+cv-tailor/            简历定制
+gap-roadmap/          能力缺口与行动路径
+interview-prep/       面试前准备
+interview-strategy/   面试现场展示策略
+interview-review/     面试后复盘
+output/               HTML 展示页面
+data/                 投递记录与缺口回流
 ```
 
----
+这些个人输出默认不会被 Git 提交。
 
-## 个性化定制
+## 数据与隐私
 
-### 用对话直接改
+- 简历、JD、报告和个人配置保存在本地
+- Claude Code 分析时会将必要内容发送给其模型服务，请同时阅读 Anthropic 的隐私政策
+- 不要将包含真实简历、联系方式、面试记录或公司内部信息的文件提交到公开仓库
+- 建议使用私有仓库保存个人使用中的 NOgap 工作区
 
-NOgap 设计为可以被 AI 直接修改。在 Claude Code 里说：
+## 当前范围
 
-- "把我的目标岗位改成 AI 产品运营" → 系统更新 `config/profile.yml`
-- "我不考虑北京以外的城市" → 写入 `config/profile.yml`
-- "这个评分给高了，我在这块经历其实很薄弱" → 系统调整策略并记录到 `modes/_profile.md`
-- "我刚加了一段实习经历" → 系统读取更新后的 `cv.md` 重新评估
+当前版本的评分逻辑、输出语言、简历表达和面试建议以中文求职语境为核心。英文 JD 可以被解析，但这不等同于已完成英语国家招聘制度、文化和表达习惯的适配。
 
-每次交互后系统会变得更了解你。
+未来计划提供面向英语国家的独立版本，而不是在中文版本中简单翻译界面。
 
-### 手动编辑
+## 致谢与许可
 
-| 文件 | 修改内容 |
-|------|---------|
-| `cv.md` | 添加新经历、更新数字、补充细节 |
-| `config/profile.yml` | 目标岗位、城市偏好、薪资期望 |
-| `modes/_profile.md` | 个人叙事策略、差异化标签、写作风格 |
+NOgap 的早期架构设计借鉴了 [@santifer](https://github.com/santifer) 的开源项目 [career-ops](https://github.com/santifer/career-ops)。NOgap 在目标用户、工作流、Mode 设计、信息传递和输出结构上进行了重新设计。
 
-**永远不要修改 `modes/_shared.md` 和其他 `modes/*.md` 文件**——这些是系统层文件，会随版本更新覆盖。你的所有个性化内容应该在 `modes/_profile.md` 和 `config/profile.yml` 里。
-
----
-
-## 数据安全
-
-- 所有数据**只存在你本地**，不上传任何服务器
-- Claude Code 会把 JD 文本和你的简历发送给 Anthropic 的 API 进行分析，适用 [Anthropic 隐私政策](https://www.anthropic.com/legal/privacy)
-- **建议把这个仓库设为私有（private）**，不要把包含真实简历和 JD 的版本 push 到公开仓库
-
----
-
-## 常见问题
-
-**Q：我没有 Claude Pro，可以用 API key 吗？**
-可以。Claude Code 支持直接配置 Anthropic API key（`ANTHROPIC_API_KEY` 环境变量）。按量计费，每次评估大约消耗 $0.02-0.05。
-
-**Q：可以评估英文 JD 吗？**
-可以。系统默认用简体中文输出，英文 JD 会被正常解析。如果你想让输出也是英文，在 `modes/_profile.md` 里说明即可。
-
-**Q：`/nogap` 命令不生效？**
-确认 Claude Code 是在 `nogap/` 目录下启动的（`claude` 命令在项目根目录运行），技能文件路径为 `.agents/skills/nogap/SKILL.md`。
-
-**Q：我已经面过一些公司了，历史记录怎么导入？**
-直接在 `data/applications.md` 里手动加行记录公司名、岗位、状态即可。历史 JD 无需导入，系统从当前开始编号。
-
-**Q：系统更新了我已有的文件吗？**
-不会。`cv.md`、`config/profile.yml`、`modes/_profile.md` 是用户层文件，永远不会被自动更新覆盖。`/nogap update` 只更新系统层的 mode 文件。
-
----
-
-## 伦理原则
-
-- 系统**永远不会**替你提交申请，每一步操作都需要你确认
-- 所有简历改写有事实依据安全锁：每条改写溯源到 `cv.md` 原文，禁止编造
-- 评分低于 3.5/5 明确建议不投递
-- 公司调研和缺口分析使用 WebSearch 实时数据，明确标注来源；搜不到的如实说，不编造
-
----
-
-## 项目来源
-
-本项目基于 [@santifer](https://github.com/santifer) 的 [career-ops](https://github.com/santifer/career-ops) 开源项目改造，在此致谢原作者。原项目 MIT License。
+本项目采用 MIT License。原项目版权声明和 NOgap 修改版权声明均保留在 [LICENSE](LICENSE) 中。

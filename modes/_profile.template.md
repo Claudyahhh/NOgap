@@ -1,100 +1,87 @@
-# User Profile Context -- NOgap
+# NOgap 个人策略档案
 
-<!-- ============================================================
-     THIS FILE IS YOURS. It will NEVER be auto-updated.
-     
-     Customize everything here: your archetypes, narrative,
-     proof points, negotiation scripts, location policy.
-     
-     The system reads _shared.md (updatable) first, then this
-     file (your overrides). Your customizations always win.
-     ============================================================ -->
+<!--
+复制为 modes/_profile.md 后填写。
+这里只放个人定位、偏好和表达策略；真实经历和数字只写在 cv.md。
+-->
 
-## Your Target Roles
+## 目标方向
 
-<!-- Replace these with YOUR target roles. Examples:
-     - Senior Backend Engineer / Staff Platform Engineer
-     - AI Product Manager / Technical PM
-     - Data Engineer / ML Engineer
-     - DevOps / SRE / Platform
-     Whatever you're optimizing for. -->
+| 目标岗位 | 优先级 | 为什么想做 |
+|----------|--------|------------|
+| AI 产品经理实习 | 主要目标 | 待填写 |
+| AI 战略 / AI 产品运营实习 | 次要目标 | 待填写 |
 
-| Archetype | Thematic axes | What they buy |
-|-----------|---------------|---------------|
-| **AI Platform / LLMOps Engineer** | Evaluation, observability, reliability, pipelines | Someone who puts AI in production with metrics |
-| **Agentic Workflows / Automation** | HITL, tooling, orchestration, multi-agent | Someone who builds reliable agent systems |
-| **Technical AI Product Manager** | GenAI/Agents, PRDs, discovery, delivery | Someone who translates business to AI product |
-| **AI Solutions Architect** | Hyperautomation, enterprise, integrations | Someone who designs end-to-end AI architectures |
-| **AI Forward Deployed Engineer** | Client-facing, fast delivery, prototyping | Someone who delivers AI solutions to clients fast |
-| **AI Transformation Lead** | Change management, adoption, org enablement | Someone who leads AI transformation in an org |
+## 当前求职阶段
 
-## Your Adaptive Framing
+- 阶段：实习 / 校招 / 社招转型
+- 可开始时间：
+- 每周可到岗天数：
+- 可持续时长：
+- 偏好城市：
 
-<!-- Map YOUR projects to each archetype. Example:
-     | Platform / LLMOps | My monitoring dashboard project | cv.md |
-     | Agentic | My chatbot with HITL escalation | cv.md section 3 | -->
+## 我希望被怎样记住
 
-| If the role is... | Emphasize about you... | Proof point sources |
-|-------------------|------------------------|---------------------|
-| Platform / LLMOps | Production systems builder, observability, evals | cv.md |
-| Agentic / Automation | Multi-agent orchestration, HITL, reliability | cv.md |
-| Technical AI PM | Product discovery, PRDs, metrics | cv.md |
-| Solutions Architect | System design, integrations, enterprise-ready | cv.md |
-| Forward Deployed Engineer | Fast delivery, client-facing, prototype to prod | cv.md |
-| AI Transformation Lead | Change management, team enablement, adoption | cv.md |
+用 1-2 句话写下你的候选人定位。不要写空泛形容词，要让人知道你能解决什么问题。
 
-## Your Exit Narrative
+> 示例：我没有正式全职经验，但做过完整的 AI 产品研究和原型项目，能够快速理解用户问题，并把模糊需求转成可验证方案。
 
-<!-- Replace with YOUR story. This frames everything. -->
+## 核心优势
 
-Use the candidate's exit story from `config/profile.yml` to frame ALL content:
-- **In Draft Answers:** The transition narrative appears in the first response
+列出 3-5 项真正能被经历证明的优势：
 
-## Your Cross-cutting Advantage
+1.
+2.
+3.
 
-<!-- What's your "signature move"? What do you do that others can't? -->
+## 证明材料
 
-Frame profile as **"Technical builder with real-world proof"** that adapts framing to the role.
+| 优势 | 对应经历或项目 | 事实来源 |
+|------|----------------|----------|
+| 待填写 | 待填写 | `cv.md` 中的具体章节 |
 
-## Your Portfolio / Demo
+## 差异化背景
 
-<!-- If you have a live demo, dashboard, or public project:
-     url: https://yoursite.dev/demo
-     password: demo-2026
-     when_to_share: "LLMOps, AI Platform roles" -->
+哪些经历表面上与目标岗位不完全一致，但能形成稀缺价值？
 
-If you have a live demo/dashboard (check profile.yml), offer access in applications for relevant roles.
+-
 
-## Your Comp Targets
+## 转型或选择故事
 
-<!-- Research comp ranges for YOUR target roles -->
+解释三个问题：
 
-**General guidance:**
-- Use WebSearch for current market data (Glassdoor, Levels.fyi, Blind)
-- Frame by role title, not by skills
-- Contractor rates are typically 30-50% higher than employee base
+1. 为什么选择现在的目标方向？
+2. 过去的经历如何支持这次选择？
+3. 为什么现在是合适的时间点？
 
-## Your Negotiation Scripts
+## 工作偏好
 
-<!-- Adapt to YOUR situation, currency, location -->
+### 会让我有能量的工作
 
-**Salary expectations:**
-> "Based on market data for this role, I'm targeting [RANGE from profile.yml]. I'm flexible on structure -- what matters is the total package and the opportunity."
+-
 
-**Geographic discount pushback:**
-> "The roles I'm competitive for are output-based, not location-based. My track record doesn't change based on postal code."
+### 明确拒绝的条件
 
-**When offered below target:**
-> "I'm comparing with opportunities in the [higher range]. I'm drawn to [company] because of [reason]. Can we explore [target]?"
+-
 
-## Your Location Policy
+### 可以协商的条件
 
-<!-- Adapt to YOUR situation -->
+-
 
-**In forms:**
-- Follow your actual availability from profile.yml
-- Specify timezone overlap in free-text fields
+## 面试表达边界
 
-**In evaluations (scoring):**
-- Remote dimension for hybrid outside your country: score **3.0** (not 1.0)
-- Only score 1.0 if JD says "must be on-site 4-5 days/week, no exceptions"
+- 哪些能力可以自信强调：
+- 哪些经历需要谨慎描述：
+- 哪些能力目前确实不会，必须诚实承认：
+
+## 写作风格
+
+<!--
+可以直接描述偏好的语气和禁用表达。
+如果 writing-samples/ 中存在个人写作样本，系统也可以提取抽象风格特征并更新此处。
+-->
+
+- 语气：
+- 句子长度：
+- 偏好的表达：
+- 避免使用：

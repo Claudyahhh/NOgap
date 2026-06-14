@@ -1,17 +1,17 @@
 {
-  "name": "career-ops",
+  "name": "nogap",
   "metadata": {
-    "description": "AI job search command center — evaluate offers, generate CVs, scan portals, track applications"
+    "description": "AI career growth companion for young people with no full-time work experience"
   },
   "owner": {
-    "name": "santifer",
-    "url": "https://santifer.io"
+    "name": "Claudyahhh",
+    "url": "https://github.com/Claudyahhh"
   },
   "plugins": [
     {
-      "name": "career-ops",
+      "name": "nogap",
       "source": "./",
-      "description": "AI job search pipeline — evaluate offers, generate CVs, scan portals, track applications",
+      "description": "Assess roles, close skill gaps, prepare for interviews, and learn from each attempt",
       "category": "productivity"
     }
   ]

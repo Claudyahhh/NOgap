@@ -1,12 +1,9 @@
 # System Context -- NOgap
 
-<!-- ============================================================
-     THIS FILE IS AUTO-UPDATABLE. Don't put personal data here.
-     
-     Your customizations go in modes/_profile.md (never auto-updated).
-     This file contains system rules, scoring logic, and tool config
-     that improve with each NOgap release.
-     ============================================================ -->
+<!--
+This is a system rules file. Do not put personal data here.
+Personal strategy belongs in modes/_profile.md.
+-->
 
 ## Sources of Truth
 
@@ -88,49 +85,24 @@
 
 ## Scoring System
 
-The evaluation uses 6 blocks (A-F) with a global score of 1-5:
+`brief` 只基于 A（岗位概览）和 B（与简历的匹配度）给出 1-5 分，不加入薪资、公司文化或岗位真实性等未执行模块。
 
-| Dimension | What it measures |
-|-----------|-----------------|
-| Match con CV | Skills, experience, proof points alignment |
-| North Star alignment | How well the role fits the user's target archetypes (from _profile.md) |
-| Comp | Salary vs market (5=top quartile, 1=well below) |
-| Cultural signals | Company culture, growth, stability, remote policy |
-| Red flags | Blockers, warnings (negative adjustments) |
-| **Global** | Weighted average of above |
+| 维度 | 权重 | 判断内容 |
+|------|------|----------|
+| 核心要求匹配 | 60% | JD 的硬性要求和核心职责有多少能被真实经历覆盖 |
+| 证据强度 | 25% | 对应经历是否具体、可追问、可量化或有作品证明 |
+| 目标方向一致性 | 15% | 岗位是否符合 `config/profile.yml` 和 `_profile.md` 中的目标方向 |
 
-**Score interpretation:**
-- 4.5+ → Strong match, recommend applying immediately
-- 4.0-4.4 → Good match, worth applying
-- 3.5-3.9 → Decent but not ideal, apply only if specific reason
-- Below 3.5 → Recommend against applying (see Ethical Use in AGENTS.md)
+**硬门槛规则：**
+- 存在明确且无法替代的硬门槛时，总分不得高于 3.4
+- 不得用“可以快速学习”掩盖学历、资格、法定身份或明确年限要求
+- 包装型 gap 不扣成真实能力缺口；真实型 gap 必须明确扣分
 
-## Posting Legitimacy (Block G)
-
-Block G assesses whether a posting is likely a real, active opening. It does NOT affect the 1-5 global score -- it is a separate qualitative assessment.
-
-**Three tiers:**
-- **High Confidence** -- Real, active opening (most signals positive)
-- **Proceed with Caution** -- Mixed signals, worth noting (some concerns)
-- **Suspicious** -- Multiple ghost indicators, user should investigate first
-
-**Key signals (weighted by reliability):**
-
-| Signal | Source | Reliability | Notes |
-|--------|--------|-------------|-------|
-| Posting age | Page snapshot | High | Under 30d=good, 30-60d=mixed, 60d+=concerning (adjusted for role type) |
-| Apply button active | Page snapshot | High | Direct observable fact |
-| Tech specificity in JD | JD text | Medium | Generic JDs correlate with ghost postings but also with poor writing |
-| Requirements realism | JD text | Medium | Contradictions are a strong signal, vagueness is weaker |
-| Recent layoff news | WebSearch | Medium | Must consider department, timing, and company size |
-| Salary transparency | JD text | Low | Jurisdiction-dependent, many legitimate reasons to omit |
-| Role-company fit | Qualitative | Low | Subjective, use only as supporting signal |
-
-**Ethical framing (MANDATORY):**
-- This helps users prioritize time on real opportunities
-- NEVER present findings as accusations of dishonesty
-- Present signals and let the user decide
-- Always note legitimate explanations for concerning signals
+**分数解释：**
+- 4.5-5.0：高度匹配，值得优先投入
+- 4.0-4.4：匹配良好，建议投递
+- 3.5-3.9：存在明显 gap，只在有具体理由时投入
+- 低于 3.5：不建议投递
 
 ## Archetype Detection
 
@@ -165,19 +137,16 @@ After detecting archetype, read `modes/_profile.md` for the user's specific fram
 2. Modify cv.md or portfolio files
 3. Submit applications on behalf of the candidate
 4. Share phone number in generated messages
-5. Recommend comp below market rate
+5. Hide a real capability gap behind resume wording
 6. Use corporate-speak
-7. Ignore the tracker (every evaluated offer gets registered)
 
 ### ALWAYS
 
-0. **Cover letter:** If the form allows it, ALWAYS include one. Same visual design as CV. JD quotes mapped to proof points. 1 page max.
 1. Read cv.md and _profile.md before evaluating
-1b. **First evaluation of each session:** Run `node cv-sync-check.mjs`. If warnings, notify user.
-2. Detect the role archetype and adapt framing per _profile.md
-3. Cite exact lines from CV when matching
-4. Use WebSearch for comp and company data
-5. Register in tracker after evaluating
+2. On the first evaluation of each session, run `node cv-sync-check.mjs`; notify the user if it reports warnings
+3. Detect the role archetype and adapt framing per _profile.md
+4. Cite exact lines from CV when matching
+5. Register every `brief` evaluation in `data/applications.md`
 6. 所有输出默认简体中文（见 Output Language 规则）
 7. 直接、可操作——不废话
 8. 生成给用户的文字：短句、主动语态、动词开头。技术术语保留英文原文。
@@ -187,13 +156,13 @@ After detecting archetype, read `modes/_profile.md` for the user's specific fram
 
 | Tool | Use |
 |------|-----|
-| WebSearch | Comp research, trends, company culture, LinkedIn contacts, fallback for JDs |
+| WebSearch | gap-roadmap 教程搜索、interview-prep 公司调研与面试信息 |
 | WebFetch | Fallback for extracting JDs from static pages |
-| Playwright | Verify offers (browser_navigate + browser_snapshot). **NEVER 2+ agents with Playwright in parallel.** |
+| Playwright | 必要时读取动态 JD 页面；不要并行启动多个浏览器任务 |
 | Read | cv.md, _profile.md |
-| Write | applications.md, reports .md, HTML files |
+| Write | JDlist、各 Mode 的 Markdown 输出、HTML 文件 |
 | Edit | Update tracker |
-| Bash | node scripts (update-system.mjs, cv-sync-check.mjs, doctor.mjs) |
+| Bash | local validation scripts (`cv-sync-check.mjs`, `doctor.mjs`) |
 
 ### Time-to-offer priority
 - Working demo + metrics > perfection
@@ -206,7 +175,7 @@ After detecting archetype, read `modes/_profile.md` for the user's specific fram
 
 **Check `_profile.md` first.** If a `## Writing Style` section exists there, use it directly — do not re-scan the writing-samples files. Re-scanning is only needed when new samples are added or the user explicitly asks to recalibrate.
 
-**When to apply:** Before generating any text the user will send or publish — cover letters, LinkedIn outreach, application form answers, follow-up emails, executive summaries, profile blurbs. Does NOT apply to internal evaluation reports (A–F blocks, scores, analysis).
+**When to apply:** Before generating text the user will speak, send, or publish, including resume bullets, self-introductions, interview answers, application answers, and profile blurbs. It does not apply to internal evaluation tables and scores.
 
 **If no cached style in `_profile.md`:** Read all files in `writing-samples/`, **skipping any file named `README.md`**. If no user-provided samples are found, skip style calibration and gently note — once, without pressure — that adding a writing sample (e.g. a past cover letter, a LinkedIn About section, any professional writing) would help tailor outputs to their voice. If samples exist, extract the markers below and write the result to `_profile.md` under `## Writing Style` so future sessions skip this step.
 
@@ -281,7 +250,7 @@ _Extracted from writing-samples/ on {date}. Re-run if new samples are added._
 
 ## Professional Writing & ATS Compatibility
 
-These rules apply to ALL generated text that ends up in candidate-facing documents: PDF summaries, bullets, cover letters, form answers, LinkedIn messages. They do NOT apply to internal evaluation reports.
+These rules apply to generated candidate-facing text such as resume bullets, self-introductions, interview answers, and profile blurbs. They do not apply to internal evaluation reports.
 
 ### Avoid cliché phrases
 - "passionate about" / "results-oriented" / "proven track record"
@@ -292,8 +261,8 @@ These rules apply to ALL generated text that ends up in candidate-facing documen
 - "in today's fast-paced world"
 - "demonstrated ability to" / "best practices" (name the practice)
 
-### Unicode normalization for ATS
-`generate-pdf.mjs` automatically normalizes em-dashes, smart quotes, and zero-width characters to ASCII equivalents for maximum ATS compatibility. But avoid generating them in the first place.
+### ATS compatibility
+Avoid zero-width characters and decorative punctuation in resume text. Keep headings, dates, company names, and role titles easy for ATS parsers to recognize.
 
 ### Vary sentence structure
 - Don't start every bullet with the same verb

@@ -3,7 +3,7 @@ name: nogap
 description: NOgap — AI 求职成长助手（评估 / 简历 / 能力 / 面试准备 / 面试展示 / 面试复盘）
 arguments: mode # Claude Code specific
 user-invocable: true
-argument-hint: "[brief | cv-tailor | gap-roadmap | interview-prep | interview-strategy | interview-review | update]"
+argument-hint: "[brief | cv-tailor | gap-roadmap | interview-prep | interview-strategy | interview-review]"
 license: MIT
 ---
 
@@ -24,7 +24,6 @@ Determine the mode from `$mode`:
 | `interview-prep` | `interview-prep` |
 | `interview-strategy` | `interview-strategy` |
 | `interview-review` | `interview-review` |
-| `update` | `update` |
 
 **Auto-pipeline detection:** If `$mode` is not a known sub-command AND contains JD text (keywords: "职责""要求""岗位""responsibilities", "requirements", "qualifications", company name + role) or a URL to a JD, execute `brief` directly.
 
@@ -48,9 +47,6 @@ NOgap — AI 求职成长助手
   /nogap interview-strategy → 面试展示：开场自我介绍 + 可共享屏幕的展示网页
   /nogap interview-review   → 面试复盘：五维度诊断 + 缺口回流 + 下次改进点
 
-其他：
-  /nogap update             → 更新系统文件
-
 使用方式：直接粘贴 JD 文本或 URL，即可启动岗位快速评估。所有 mode 输出均以三位 JD 编号对齐存档。
 ```
 
@@ -68,6 +64,6 @@ Applies to: `brief`
 ### Standalone modes (only their mode file):
 Read `modes/{mode}.md`
 
-Applies to: `cv-tailor`, `gap-roadmap`, `interview-prep`, `interview-strategy`, `interview-review`, `update`
+Applies to: `cv-tailor`, `gap-roadmap`, `interview-prep`, `interview-strategy`, `interview-review`
 
 Execute the instructions from the loaded mode file.

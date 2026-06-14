@@ -1,17 +1,15 @@
 {
-  "name": "career-ops",
-  "version": "1.6.0",
-  "description": "AI job search command center — evaluate offers, generate CVs, scan portals, track applications",
+  "name": "nogap",
+  "version": "0.1.0",
+  "description": "AI career growth companion for young people with no full-time work experience",
   "author": {
-    "name": "santifer",
-    "url": "https://santifer.io"
+    "name": "Claudyahhh",
+    "url": "https://github.com/Claudyahhh"
   },
   "skills": true,
   "permissions": {
     "allow": [
       "Bash(node:*)",
-      "WebFetch(domain:boards-api.greenhouse.io)",
-      "WebFetch(domain:jobs.ashbyhq.com)",
       "WebSearch"
     ]
   }
