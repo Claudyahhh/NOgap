@@ -4,7 +4,7 @@
 
 > 面向中文求职语境下零正职工作经验的年轻人，帮助和陪伴他们消除与理想工作之间的 gap。
 
-NOgap 是一个运行在本地、由 Claude Code 驱动的 AI 求职成长系统。它不是批量投递工具，而是一套围绕真实岗位持续评估、行动和复盘的求职成长闭环。
+NOgap 是一个运行在本地、可由 [OpenAI Codex](https://developers.openai.com/codex) 或 [Claude Code](https://claude.ai/code) 驱动的 AI 求职成长系统。它不是批量投递工具，而是一套围绕真实岗位持续评估、行动和复盘的求职成长闭环。
 
 当前版本优先适配中国大陆的招聘信息、简历表达、求职阶段和面试语境。面向英语国家的独立版本在后续规划中。
 
@@ -39,17 +39,31 @@ NOgap 把这些问题连接成一个完整流程：
 | `cv-tailor` | 针对 JD 重写简历 | 定级分析、人才画像、逐条改写、事实依据 |
 | `gap-roadmap` | 识别并补齐真实能力缺口 | 四象限优先级、具体行动、优质教程 |
 | `interview-prep` | 准备即将到来的面试 | 公司调研、问题预测、备考清单、STAR 拆解 |
-| `interview-strategy` | 组织面试现场的自我展示 | 口播自我介绍、可共享屏幕的 HTML 页面 |
+| `interview-strategy` | 组织面试现场的自我展示 | 先确认重点经历、个人主题色、板块、颗粒度、视觉风格和时长，再生成口播自我介绍与纯净 HTML 页面 |
 | `interview-review` | 从真实面试中学习 | 五维复盘、新缺口、下一次改进动作 |
 
 每个 Mode 都会生成独立 Markdown 文档。同一 JD 的所有输出共享一个三位数字编号，从 `000` 开始。
+
+## 产品展示
+
+下面是 `interview-strategy` 生成的虚构示例。人物、公司、经历、数字和项目均为演示数据，不包含真实用户隐私。
+
+### 桌面端
+
+![NOgap Interview Strategy 桌面端示例](docs/assets/interview-strategy-demo-desktop.jpg)
+
+### 手机端
+
+<img src="docs/assets/interview-strategy-demo-mobile.jpg" alt="NOgap Interview Strategy 手机端示例" width="360">
+
+[打开示例 HTML](docs/demo/interview-strategy-demo.html)
 
 ## 快速开始
 
 ### 环境要求
 
-- [Claude Code](https://claude.ai/code)
-- Anthropic 账号或可用的 API 凭据
+- [OpenAI Codex](https://developers.openai.com/codex)（桌面端或 CLI）或 [Claude Code](https://claude.ai/code)
+- OpenAI 账号（使用 Codex）或 Anthropic 账号 / API 凭据（使用 Claude Code）
 - Git
 - Node.js 18 或更高版本
 
@@ -58,10 +72,33 @@ NOgap 把这些问题连接成一个完整流程：
 ```bash
 git clone https://github.com/Claudyahhh/NOgap.git
 cd NOgap
+```
+
+### 使用 Codex
+
+你可以在 Codex 桌面端打开克隆后的 `NOgap` 文件夹，也可以在仓库目录启动 Codex CLI：
+
+```bash
+codex
+```
+
+然后直接输入：
+
+```text
+使用 NOgap，显示所有功能。
+```
+
+也可以直接粘贴一份 JD。Codex 会读取仓库中的 `AGENTS.md` 和 NOgap skill，完成初始化并进入 `brief`。
+
+### 使用 Claude Code
+
+在仓库目录启动：
+
+```bash
 claude
 ```
 
-在 Claude Code 中输入：
+然后输入：
 
 ```text
 /nogap
@@ -91,7 +128,20 @@ NOgap 会检查三个个人文件：
 
 初始化完成后，直接粘贴目标 JD 即可开始。
 
-## 常用命令
+## 常用 Mode
+
+在 Codex 中可以直接使用自然语言：
+
+```text
+评估下面这份 JD。
+对 #000 运行 cv-tailor。
+对 #000 运行 gap-roadmap。
+对 #000 运行 interview-prep。
+对 #000 运行 interview-strategy。
+使用这份面试文字稿对 #000 运行 interview-review。
+```
+
+在 Claude Code 中也可以使用对应命令：
 
 ```text
 /nogap
@@ -103,7 +153,13 @@ NOgap 会检查三个个人文件：
 /nogap interview-review #000
 ```
 
-`#000` 指向该 JD 的统一编号。后续 Mode 会通过编号读取同一岗位的上下文。
+`#000` 指向该 JD 的统一编号。两种使用方式都会通过编号读取同一岗位的上下文。
+
+运行 `interview-strategy` 后，系统不会立即生成网页，而会先推荐并确认本轮想重点讲的经历、个人主题色、网页主题色、保留板块、内容颗粒度、视觉风格和预计讲解时长，并提醒你上传本轮面试可能展示的项目文件或链接。确认后生成的 HTML 是面试成品页，不包含配色按钮、上传提示、编辑提示或生成说明。
+
+如果你提供个人主题色，NOgap 会把它写入 `modes/_profile.md`，之后生成面试展示网页时默认优先采用。网页内容会比普通个人主页更详细，会围绕简历中的核心经历补充场景、行动、结果和与 JD 的关系，帮助面试官快速抓住重点。
+
+项目链接会被整理为可直接打开的展示入口。本地 PDF、图片、HTML 或其他项目文件会复制到该 JD 的 `output/assets/{###}/` 资源目录，网页通过相对路径引用，不会暴露原始电脑路径。
 
 ## 信息如何流动
 
@@ -177,7 +233,7 @@ data/                 投递记录与缺口回流
 ## 数据与隐私
 
 - 简历、JD、报告和个人配置保存在本地
-- Claude Code 分析时会将必要内容发送给其模型服务，请同时阅读 Anthropic 的隐私政策
+- Codex 或 Claude Code 分析时会将必要内容发送给各自的模型服务，请阅读所使用产品的数据与隐私政策
 - 不要将包含真实简历、联系方式、面试记录或公司内部信息的文件提交到公开仓库
 - 建议使用私有仓库保存个人使用中的 NOgap 工作区
 

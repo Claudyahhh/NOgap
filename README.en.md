@@ -4,7 +4,7 @@
 
 > An AI career-growth companion for young people with no full-time work experience, designed first for the Chinese-language job market.
 
-NOgap is a local, Claude Code-powered system that helps users close the gap between where they are and the work they want. It is not a mass-application tool. It creates a continuous loop of role evaluation, focused action, interview preparation, and learning from real outcomes.
+NOgap is a local AI career-growth system that can run with [OpenAI Codex](https://developers.openai.com/codex) or [Claude Code](https://claude.ai/code). It helps users close the gap between where they are and the work they want. It is not a mass-application tool. It creates a continuous loop of role evaluation, focused action, interview preparation, and learning from real outcomes.
 
 The current version is designed around mainland China's job descriptions, resume conventions, early-career stages, and interview context. A separate version for English-speaking countries is planned.
 
@@ -40,17 +40,31 @@ New gaps feed the next action plan
 | `cv-tailor` | Tailor the resume to a specific JD | Level analysis, candidate profile, rewritten experience, evidence |
 | `gap-roadmap` | Identify and close real capability gaps | Priority matrix, concrete actions, selected learning resources |
 | `interview-prep` | Prepare for an upcoming interview | Company research, predicted questions, preparation plan, STAR stories |
-| `interview-strategy` | Structure the live interview presentation | Spoken introduction and a shareable HTML profile |
+| `interview-strategy` | Structure the live interview presentation | Confirm key experiences, personal theme color, sections, detail level, visual style, and duration before generating a spoken introduction and clean HTML presentation |
 | `interview-review` | Learn from an actual interview | Five-part review, newly exposed gaps, next actions |
 
 Each Mode writes a standalone Markdown document. Outputs for the same job share a three-digit ID beginning with `000`.
+
+## Product Preview
+
+The following `interview-strategy` page is a fictional demo. The person, company, experience, metrics, and projects are invented and contain no real user information.
+
+### Desktop
+
+![NOgap Interview Strategy desktop demo](docs/assets/interview-strategy-demo-desktop.jpg)
+
+### Mobile
+
+<img src="docs/assets/interview-strategy-demo-mobile.jpg" alt="NOgap Interview Strategy mobile demo" width="360">
+
+[Open the demo HTML](docs/demo/interview-strategy-demo.html)
 
 ## Quick Start
 
 ### Requirements
 
-- [Claude Code](https://claude.ai/code)
-- An Anthropic account or usable API credentials
+- [OpenAI Codex](https://developers.openai.com/codex) (desktop app or CLI) or [Claude Code](https://claude.ai/code)
+- An OpenAI account for Codex, or an Anthropic account / API credentials for Claude Code
 - Git
 - Node.js 18 or later
 
@@ -59,10 +73,33 @@ Each Mode writes a standalone Markdown document. Outputs for the same job share 
 ```bash
 git clone https://github.com/Claudyahhh/NOgap.git
 cd NOgap
+```
+
+### Use with Codex
+
+Open the cloned `NOgap` folder in the Codex desktop app, or start Codex CLI from the repository:
+
+```bash
+codex
+```
+
+Then ask:
+
+```text
+Use NOgap and show all available features.
+```
+
+You can also paste a job description directly. Codex reads the repository's `AGENTS.md` and NOgap skill, completes setup, and routes the JD to `brief`.
+
+### Use with Claude Code
+
+Start Claude Code from the repository:
+
+```bash
 claude
 ```
 
-Inside Claude Code, run:
+Then run:
 
 ```text
 /nogap
@@ -92,7 +129,20 @@ If any file is missing, the system guides the user through creating it in conver
 
 Once setup is complete, paste a target JD to begin.
 
-## Common Commands
+## Common Modes
+
+In Codex, use natural-language requests:
+
+```text
+Evaluate the following job description.
+Run cv-tailor for #000.
+Run gap-roadmap for #000.
+Run interview-prep for #000.
+Run interview-strategy for #000.
+Use this interview transcript to run interview-review for #000.
+```
+
+In Claude Code, you can also use the corresponding commands:
 
 ```text
 /nogap
@@ -104,7 +154,13 @@ Once setup is complete, paste a target JD to begin.
 /nogap interview-review #000
 ```
 
-`#000` identifies one JD across the entire workflow. Downstream Modes use that ID to load the correct context.
+`#000` identifies one JD across the entire workflow. Both interfaces use that ID to load the correct context.
+
+`interview-strategy` uses a two-step flow. It first confirms the past experiences the user wants to emphasize, personal theme color, page theme color, sections, level of detail, visual style, and expected presentation duration, and asks for any project files or links that may be shown during the interview. The generated HTML is a presentation-ready page with no color picker, upload prompt, editing prompt, or generation UI.
+
+If the user provides a personal theme color, NOgap records it in `modes/_profile.md` and uses it by default for future interview pages. The page is intentionally more detailed than a generic personal website: it highlights the situation, action, result, metrics, and JD relevance behind key resume experiences so interviewers can understand the strongest evidence quickly.
+
+Public links become project actions. Approved local files are copied into `output/assets/{###}/` and referenced with relative paths, so the page never exposes the original path on the user's computer.
 
 ## How Information Flows
 
@@ -178,7 +234,7 @@ Personal outputs are ignored by Git by default.
 ## Data and Privacy
 
 - Resumes, JDs, reports, and personal configuration remain in the local workspace
-- Claude Code sends required context to its model service during analysis; users should also review Anthropic's privacy policy
+- Codex or Claude Code sends required context to its model service during analysis; review the data and privacy policy of the product you use
 - Do not commit real resumes, contact details, interview transcripts, or confidential company information to a public repository
 - A private repository is recommended for an actively used personal NOgap workspace
 

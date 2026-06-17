@@ -28,7 +28,7 @@
 | `cv-tailor` | `/nogap cv-tailor` | 定级分析 + 针对目标 JD 逐条改写简历，附事实依据安全锁 | `cv-tailor/` |
 | `gap-roadmap` | `/nogap gap-roadmap` | 能力缺口四象限 + 含教程推荐的可执行行动路径 | `gap-roadmap/` |
 | `interview-prep` | `/nogap interview-prep` | 公司调研 + 个性化问题预测 + P0-P2 备考清单 + STAR 故事拆解 | `interview-prep/` |
-| `interview-strategy` | `/nogap interview-strategy` | 开场自我介绍 + 可共享屏幕的展示网页 | `interview-strategy/` + `output/` |
+| `interview-strategy` | `/nogap interview-strategy` | 先确认重点经历、个人主题色、板块、颗粒度、视觉风格和时长，再生成开场自我介绍 + 纯净展示网页 | `interview-strategy/` + `output/` |
 | `interview-review` | `/nogap interview-review` | 面试文字稿五维度复盘 + 缺口回流 | `interview-review/` |
 
 ### JD 编号体系
@@ -149,6 +149,26 @@
 | 面试前备战 | `interview-prep` |
 | 要准备面试现场展示 | `interview-strategy` |
 | 面试结束后复盘 | `interview-review` |
+
+---
+
+## Interview Strategy 两阶段生成
+
+调用 `interview-strategy` 时，先根据 JD 推荐并确认以下网页参数：
+
+1. 本轮想重点提到的过往经历
+2. 是否有个人主题色；如有，记录到 `modes/_profile.md`
+3. 本轮网页主题色
+4. 保留板块
+5. 内容颗粒度
+6. 视觉风格
+7. 预计讲解时长
+
+同时提醒用户上传或提供本轮可能展示的项目文件与链接，并注明材料标题、证明点及是否允许面试官打开或下载。本地材料统一复制到 `output/assets/{###}/`，HTML 使用相对路径，不得暴露用户电脑的绝对路径。
+
+用户确认前不生成 HTML。生成后的网页必须固化用户选择，不显示配色选择器、板块开关、生成说明、修改提示或其他制作控件，只保留面试现场需要展示的内容与导航。
+
+网页内容默认比普通个人主页更详细：重点经历需要引用 `cv.md` 中的场景、行动、结果、指标和 JD 关系，帮助面试官快速理解简历里最重要的部分。若加入流程图、截图或架构图，核心图片使用大图展示区，不得压成小缩略图。
 
 ---
 
