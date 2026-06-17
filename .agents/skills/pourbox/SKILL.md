@@ -1,9 +1,9 @@
 ---
-name: outlook-mail-cleanup
-description: Public, safety-first workflow for auditing and cleaning Outlook web mail through the in-app browser. Use when a user asks to delete old email, clean Focused or Other inbox categories, remove Sent mail, preserve flagged/official/offer messages, reduce mailbox storage, or define repeatable Outlook retention rules.
+name: pourbox
+description: Pourbox is a public, safety-first Outlook web mail cleanup workflow for auditing, filtering, and batch-deleting mailbox clutter through the in-app browser. Use when a user asks to delete old email, clean Focused or Other inbox categories, remove Sent mail, preserve flagged/official/offer messages, reduce mailbox storage, or define repeatable Outlook retention rules.
 ---
 
-# Outlook Mail Cleanup
+# Pourbox
 
 Use the in-app Browser skill. Read its confirmation guidance before interacting with Outlook.
 
@@ -63,7 +63,7 @@ Other: ...
 Deleted Items: recoverable / permanent
 ```
 
-For relative dates, state the absolute date and whether it is inclusive. “Older than one calendar month” normally keeps messages on the same day of the previous month and deletes the day before and earlier.
+For relative dates, state the absolute date and whether it is inclusive. "Older than one calendar month" normally keeps messages on the same day of the previous month and deletes the day before and earlier.
 
 ## Audit
 
@@ -72,7 +72,7 @@ For relative dates, state the absolute date and whether it is inclusive. “Olde
 3. Set Outlook advanced search scope to `Current folder`.
 4. Use the end-date picker instead of relying only on textual date operators.
 5. Sample visible results and verify rendered dates, senders, and categories.
-6. Report ambiguity before deletion. Preserve uncertain messages unless the user selected “keep nothing.”
+6. Report ambiguity before deletion. Preserve uncertain messages unless the user selected "keep nothing."
 
 ## Preserve without mutating user data
 
@@ -116,7 +116,7 @@ Outlook may delete search results in batches of 75 conversations. Do not declare
 ## Safety rules
 
 - Deletion syncs across Outlook clients.
-- “Delete all Other” overrides keep rules within Other. Call this out explicitly.
+- "Delete all Other" overrides keep rules within Other. Call this out explicitly.
 - Never permanently empty Deleted Items under the same confirmation used for ordinary deletion.
 - After a failed locator or navigation, take a fresh DOM snapshot before acting.
 - Use the final Outlook dialog, not visible row count, as the authoritative batch count.

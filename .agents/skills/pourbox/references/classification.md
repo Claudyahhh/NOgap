@@ -23,7 +23,7 @@ Strong official-role signals include:
 - `human resources`, `recruiting`, `press office`, `support`;
 - government department, public authority, or institutional service identities.
 
-Use sender display name, address, subject, and message purpose together. Preserve ambiguous messages and report them unless the user selected “keep nothing.”
+Use sender display name, address, subject, and message purpose together. Preserve ambiguous messages and report them unless the user selected "keep nothing."
 
 ## Flags and favorites
 
