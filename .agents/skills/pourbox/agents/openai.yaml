@@ -1,5 +1,0 @@
-interface:
-  display_name: "Pourbox"
-  short_description: "Interactive, safety-first Outlook mailbox cleanup workflow"
-  default_prompt: "Use $pourbox to ask me the key retention questions and safely clean my Outlook mailbox."
-
