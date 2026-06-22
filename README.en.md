@@ -142,7 +142,7 @@ Every finding cites transcript evidence and includes a concrete next action. New
 
 ## Product Preview
 
-The following `interview-strategy` page is a fictional demo. The person, company, experience, metrics, and projects are invented and contain no real user information.
+The following fictional demo uses the latest `#002 interview-strategy` page structure. Its person, school, company, experience, metrics, and projects are invented and contain no real user information.
 
 ### Desktop
 

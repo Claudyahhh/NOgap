@@ -3,61 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="NOgap Interview Strategy fictional demo">
-  <title>林澄 · AI 产品策略实习生</title>
+  <meta name="description" content="NOgap 虚构人物的 AI 内容增长面试展示页">
+  <title>林澄 · AI 内容增长</title>
   <style>
-    :root {
-      --bg: #f4f6f8;
-      --panel: #fff;
-      --ink: #18201d;
-      --muted: #66706c;
-      --line: #dce2df;
-      --accent: #16745a;
-      --accent-dark: #0e513f;
-      --accent-soft: #dcefe8;
-      --sidebar: #15231e;
-      --sidebar-muted: #aebdb7;
-    }
+    /*
+      严格三色系 — 来自 design.md，未改动任何色值
+      粉色 #FFC9C9  50%  主体配色
+      浅黄 #FFF1C7  30%  辅助配色
+      深蓝 #4A6FA5  20%  标题、按钮、边框、字体重点
+    */
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      background: var(--bg);
-      color: var(--ink);
+      background: #FFC9C9;
+      color: #222;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-      letter-spacing: 0;
     }
 
     a { color: inherit; }
 
-    aside {
+    /* ── Sidebar ── */
+    .sidebar {
       position: fixed;
       inset: 0 auto 0 0;
       width: 280px;
-      padding: 38px 28px;
-      background: var(--sidebar);
+      padding: 38px 28px 30px;
+      display: flex;
+      flex-direction: column;
+      background: #4A6FA5;
       color: #fff;
+      z-index: 10;
     }
 
-    .demo-mark {
-      margin: 0 0 18px;
-      color: #8dc7b3;
+    .eyebrow {
+      margin: 0 0 12px;
+      color: #FFF1C7;
       font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 34px;
-      line-height: 1.1;
-    }
+    h1 { margin: 0; font-size: 32px; line-height: 1.15; color: #fff; }
 
-    .role {
-      margin: 14px 0 28px;
-      color: #d7e2de;
+    .target {
+      margin: 14px 0 0;
+      color: #FFC9C9;
       font-size: 15px;
       line-height: 1.6;
     }
@@ -65,67 +58,77 @@
     nav {
       display: grid;
       gap: 6px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(255,255,255,0.14);
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.2);
     }
 
     nav a {
       padding: 10px 12px;
-      color: var(--sidebar-muted);
-      border-left: 2px solid transparent;
+      color: rgba(255,255,255,0.7);
       text-decoration: none;
       font-size: 14px;
+      border-left: 2px solid transparent;
     }
 
-    nav a:hover,
-    nav a:focus-visible {
+    nav a:hover, nav a:focus-visible {
       color: #fff;
-      border-color: #72c3a7;
-      background: rgba(255,255,255,0.06);
+      border-color: #FFF1C7;
+      background: rgba(255,255,255,0.1);
       outline: none;
     }
 
+    .sidebar-bottom {
+      margin-top: auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.6);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    /* ── Main ── */
     main {
       margin-left: 280px;
-      padding: 44px clamp(30px, 5vw, 76px) 80px;
+      padding: 44px clamp(28px, 5vw, 78px) 76px;
     }
 
-    .content {
-      width: min(1040px, 100%);
-      margin: 0 auto;
-    }
+    .content { width: min(1060px, 100%); margin: 0 auto; }
 
+    /* ── Hero ── */
     .hero {
       min-height: 300px;
       display: grid;
       align-content: center;
-      padding: 46px;
-      background: var(--accent-soft);
-      border: 1px solid #cce1d9;
+      padding: 44px;
+      background: #FFF1C7;
+      border: 2px solid #4A6FA5;
     }
 
-    .eyebrow {
+    .hero-kicker {
       margin: 0 0 14px;
-      color: var(--accent-dark);
+      color: #4A6FA5;
       font-size: 14px;
-      font-weight: 750;
+      font-weight: 760;
     }
 
     h2 {
-      max-width: 800px;
+      max-width: 860px;
       margin: 0;
-      font-size: clamp(42px, 5vw, 66px);
-      line-height: 1.08;
+      font-size: clamp(36px, 4vw, 52px);
+      line-height: 1.1;
+      color: #4A6FA5;
     }
 
-    .hero-copy {
-      max-width: 760px;
-      margin: 24px 0 0;
-      color: #4d5a55;
-      font-size: 17px;
+    .hero p:last-child {
+      max-width: 790px;
+      margin: 22px 0 0;
+      color: #333;
+      font-size: 16px;
       line-height: 1.8;
     }
 
+    /* ── Metrics ── */
     .metrics {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -134,279 +137,354 @@
     }
 
     .metric {
-      min-height: 124px;
+      min-height: 120px;
       padding: 22px;
-      background: var(--panel);
-      border: 1px solid var(--line);
+      background: #fff;
+      border: 1px solid #FFC9C9;
     }
 
     .metric strong {
       display: block;
       margin-bottom: 10px;
-      color: var(--accent);
-      font-size: 34px;
+      color: #4A6FA5;
+      font-size: 32px;
+      line-height: 1;
     }
 
     .metric span {
-      color: var(--muted);
+      color: #444;
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
-    section { padding-top: 68px; }
+    /* ── Section ── */
+    section { padding-top: 70px; }
 
     .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 20px;
       margin-bottom: 20px;
       padding-bottom: 14px;
-      border-bottom: 1px solid var(--line);
+      border-bottom: 2px solid #4A6FA5;
     }
 
     h3 {
       margin: 0;
-      font-size: 25px;
+      font-size: 26px;
+      line-height: 1.25;
+      color: #4A6FA5;
     }
 
-    .section-head span {
-      color: var(--muted);
-      font-size: 12px;
-    }
+    /* ── Experience Cards ── */
+    .experience-stack { display: grid; gap: 14px; }
 
-    .experience {
+    .experience-card {
       display: grid;
-      gap: 12px;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr);
+      gap: 20px;
+      padding: 26px;
+      background: #fff;
+      border: 1px solid #FFC9C9;
     }
 
-    .experience article {
-      display: grid;
-      grid-template-columns: 150px minmax(0, 1fr) auto;
-      gap: 24px;
-      align-items: start;
-      padding: 24px;
-      background: var(--panel);
-      border: 1px solid var(--line);
+    .experience-card.featured {
+      border-color: #4A6FA5;
+      border-width: 2px;
+      background: #FFF1C7;
     }
 
-    .period {
-      color: var(--muted);
+    .experience-meta { display: grid; align-content: start; gap: 12px; }
+
+    .experience-meta small {
+      color: #4A6FA5;
       font-size: 12px;
+      font-weight: 760;
     }
 
-    h4 {
-      margin: 0 0 8px;
-      font-size: 18px;
+    h4 { margin: 0 0 10px; font-size: 20px; line-height: 1.35; color: #222; }
+    p { margin: 0; color: #444; line-height: 1.75; }
+
+    .experience-points { display: grid; gap: 12px; }
+
+    .point {
+      padding-left: 14px;
+      border-left: 3px solid #FFC9C9;
     }
 
-    article p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
-    }
+    .point strong { display: block; margin-bottom: 4px; color: #222; font-size: 14px; }
+    .point span { color: #444; font-size: 14px; line-height: 1.7; }
 
-    .badge {
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+
+    .tag {
       padding: 7px 10px;
-      color: var(--accent-dark);
-      background: var(--accent-soft);
-      font-size: 11px;
-      white-space: nowrap;
+      color: #4A6FA5;
+      background: rgba(74, 111, 165, 0.1);
+      font-size: 12px;
+      font-weight: 500;
     }
 
-    .grid {
+    .tag.highlight {
+      background: #FFF1C7;
+      color: #4A6FA5;
+      font-weight: 600;
+    }
+
+    /* ── Links ── */
+    .link {
+      display: inline-flex;
+      margin-top: 18px;
+      color: #4A6FA5;
+      font-size: 13px;
+      font-weight: 760;
+      text-decoration: none;
+      border-bottom: 1px solid #4A6FA5;
+    }
+
+    .link:hover, .link:focus-visible {
+      color: #222;
+      border-color: #222;
+      outline: none;
+    }
+
+    .link + .link { margin-left: 14px; }
+
+    /* ── Positioning Grid ── */
+    .pos-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
     }
 
-    .grid article {
-      min-height: 164px;
+    .pos-card {
+      min-height: 160px;
       padding: 24px;
-      background: var(--panel);
-      border: 1px solid var(--line);
+      background: #fff;
+      border: 1px solid #FFC9C9;
     }
 
-    .grid small {
+    .pos-card small {
       display: block;
-      margin-bottom: 16px;
-      color: var(--accent);
-      font-weight: 700;
+      margin-bottom: 14px;
+      color: #4A6FA5;
+      font-size: 12px;
+      font-weight: 760;
     }
 
-    .project-link {
-      display: inline-flex;
-      margin-top: 18px;
-      color: var(--accent-dark);
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
+    .pos-card.full-width { grid-column: 1 / -1; }
+
+    .quote-block {
+      padding: 30px;
+      background: #4A6FA5;
+      color: #fff;
+      border: none;
     }
 
-    .project-link:hover,
-    .project-link:focus-visible {
-      text-decoration: underline;
-      outline: none;
+    .quote-block p {
+      color: #FFF1C7;
+      font-size: 17px;
+      line-height: 1.8;
     }
 
-    .note {
-      margin: 58px 0 0;
-      color: #7a8581;
+    /* ── Why this team ── */
+    .why-titles {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .why-title-item {
+      padding: 28px 24px;
+      background: #FFF1C7;
+      border: 1px solid #FFC9C9;
+    }
+
+    .why-title-item small {
+      display: block;
+      margin-bottom: 14px;
+      color: #4A6FA5;
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .why-title-item h4 {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.45;
+      color: #222;
+    }
+
+    /* ── Footer ── */
+    .footnote {
+      margin-top: 60px;
+      color: #4A6FA5;
       font-size: 11px;
       text-align: center;
     }
 
-    @media (max-width: 900px) {
-      aside {
-        position: static;
-        width: 100%;
-        padding: 28px 22px;
-      }
-
-      nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-      main {
-        margin-left: 0;
-        padding: 24px 18px 60px;
-      }
-
-      .hero {
-        min-height: 0;
-        padding: 30px 22px;
-      }
-
-      h2 { font-size: 36px; }
-
-      .metrics,
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .experience article {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      .badge { justify-self: start; }
+    /* ── Responsive ── */
+    @media (max-width: 980px) {
+      .sidebar { position: static; width: 100%; min-height: auto; padding: 28px 22px; }
+      nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      nav a { border-left: 0; border-bottom: 2px solid transparent; }
+      main { margin-left: 0; padding: 24px 18px 64px; }
+      .experience-card { grid-template-columns: 1fr; }
+      .why-titles { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 540px) {
-      .metrics,
-      .grid {
-        grid-template-columns: 1fr;
-      }
+    @media (min-width: 981px) and (max-width: 1380px) {
+      h2 { max-width: 700px; font-size: 44px; }
+      .hero { padding: 38px; }
+    }
 
-      section { padding-top: 52px; }
-
-      .section-head {
-        align-items: start;
-        flex-direction: column;
-        gap: 6px;
-      }
+    @media (max-width: 640px) {
+      nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero { min-height: 0; padding: 30px 22px; }
+      h2 { font-size: 32px; }
+      .metrics, .pos-grid, .why-titles { grid-template-columns: 1fr; }
+      .link + .link { margin-left: 0; display: table; }
+      section { padding-top: 54px; }
+      .section-head { align-items: start; flex-direction: column; gap: 6px; }
     }
   </style>
 </head>
 <body>
-  <aside>
-    <p class="demo-mark">Fictional demo · #007</p>
+  <aside class="sidebar">
+    <p class="eyebrow">Fictional Demo · #002</p>
     <h1>林澄</h1>
-    <p class="role">星河智能<br>AI 产品策略实习生</p>
+    <p class="target">星云智能<br>AI 内容增长实习生</p>
     <nav aria-label="页面导航">
-      <a href="#overview">自我定位</a>
-      <a href="#experience">相关经历</a>
-      <a href="#fit">岗位适配</a>
-      <a href="#projects">项目展示</a>
-      <a href="#contribution">预期贡献</a>
+      <a href="#experience">经历与项目</a>
+      <a href="#positioning">个人定位</a>
+      <a href="#why-team">想加入团队</a>
     </nav>
+    <div class="sidebar-bottom">
+      北辰大学（虚构）<br>
+      商业分析 · 本科在读<br>
+      可连续实习 · 4 个月以上
+    </div>
   </aside>
 
   <main>
     <div class="content">
-      <header class="hero" id="overview">
-        <p class="eyebrow">用户研究 × AI 产品 × 数据判断</p>
-        <h2>把用户问题转成可以验证的产品决策</h2>
-        <p class="hero-copy">持续观察 AI 工具的真实使用行为，用访谈、实验和数据分析定位问题，再把结论推进到产品方案与验证。</p>
-      </header>
+      <section class="hero">
+        <p class="hero-kicker">AI 工具实践 × 内容增长实验 × 行业趋势判断</p>
+        <h2>把 AI 趋势转成用户愿意看、愿意分享的内容</h2>
+        <p>我关注的不只是热点本身，而是怎样用用户洞察找到选题，用 AI 工作流提高制作效率，再用数据复盘迭代下一轮内容。</p>
+      </section>
 
-      <div class="metrics" aria-label="核心数字">
-        <div class="metric"><strong>42</strong><span>深度用户访谈</span></div>
-        <div class="metric"><strong>18</strong><span>AI 产品拆解</span></div>
-        <div class="metric"><strong>3</strong><span>从 0 到 1 原型</span></div>
-        <div class="metric"><strong>+27%</strong><span>核心流程完成率</span></div>
+      <div class="metrics" aria-label="虚构示例数据">
+        <div class="metric"><strong>3 个</strong><span>独立搭建的<br>AI 内容工作流</span></div>
+        <div class="metric"><strong>36%</strong><span>内容制作周期<br>模拟缩短比例</span></div>
+        <div class="metric"><strong>32 份</strong><span>AI 趋势与产品<br>研究简报</span></div>
+        <div class="metric"><strong>520K</strong><span>虚构案例中的<br>最高单条播放</span></div>
       </div>
 
       <section id="experience">
-        <div class="section-head">
-          <h3>相关经历</h3>
-          <span>只展示与本轮岗位直接相关的证据</span>
-        </div>
-        <div class="experience">
-          <article>
-            <span class="period">2025.07—2025.12</span>
-            <div>
-              <h4>远望实验室 · AI 产品实习生</h4>
-              <p>围绕知识工作者开展访谈和可用性测试，将高频问题整理为产品优先级并跟进两轮验证。</p>
+        <div class="section-head"><h3>经历与项目</h3></div>
+        <div class="experience-stack">
+          <article class="experience-card featured">
+            <div class="experience-meta">
+              <small>星轨实验室（虚构）· AI 产品运营实习生</small>
+              <h4>Atlas：搭建 AI 趋势选题与内容生产工作流</h4>
+              <p>把行业信息采集、选题判断、内容草拟和发布复盘连接成可重复使用的流程。</p>
+              <div class="tags">
+                <span class="tag highlight">3 个工作流</span>
+                <span class="tag">Agent Workflow</span>
+                <span class="tag">内容实验</span>
+              </div>
+              <a class="link" href="#atlas-case">查看项目摘要 ↓</a>
             </div>
-            <span class="badge">核心案例</span>
-          </article>
-          <article>
-            <span class="period">2025.02—2025.06</span>
-            <div>
-              <h4>校园创新中心 · 用户研究项目</h4>
-              <p>设计问卷与访谈框架，结合行为数据识别转化断点，推动核心流程完成率提升 27%。</p>
+            <div class="experience-points" id="atlas-case">
+              <div class="point"><strong>场景</strong><span>团队需要持续追踪 AI 产品更新，但选题搜集分散、内容制作周期过长。</span></div>
+              <div class="point"><strong>行动</strong><span>设计信息筛选、趋势评分、内容草拟与人工校验流程，并建立选题复盘字段。</span></div>
+              <div class="point"><strong>结果</strong><span>在虚构测试中将单篇内容制作周期缩短 36%，沉淀 12 套可复用选题模板。</span></div>
+              <div class="point"><strong>对应 JD</strong><span>证明 AI 工具使用、内容策划和工作流搭建能力。</span></div>
             </div>
-            <span class="badge">研究方法</span>
+          </article>
+
+          <article class="experience-card featured">
+            <div class="experience-meta">
+              <small>个人独立项目（虚构）· Pulse</small>
+              <h4>从用户访谈到原型，验证创作者的灵感管理需求</h4>
+              <p>围绕内容创作者的选题焦虑设计轻量工具，并完成两轮原型测试。</p>
+              <div class="tags">
+                <span class="tag highlight">18 次访谈</span>
+                <span class="tag highlight">2 轮测试</span>
+                <span class="tag">AI Coding</span>
+              </div>
+              <a class="link" href="#pulse-case">打开案例说明 ↓</a>
+            </div>
+            <div class="experience-points" id="pulse-case">
+              <div class="point"><strong>场景</strong><span>创作者收藏了大量素材，却难以在需要时快速形成可执行选题。</span></div>
+              <div class="point"><strong>行动</strong><span>完成 18 次虚构用户访谈，定义核心流程，并使用 AI 编程工具搭建交互原型。</span></div>
+              <div class="point"><strong>结果</strong><span>两轮测试后，核心任务完成率从 61% 提升至 84%（均为演示数据）。</span></div>
+              <div class="point"><strong>对应 JD</strong><span>证明从用户问题到产品交付的自闭环能力与内容审美判断。</span></div>
+            </div>
+          </article>
+
+          <article class="experience-card">
+            <div class="experience-meta">
+              <small>光栈科技（虚构）· 增长实习生</small>
+              <h4>创作者共创：4 条内容进入平台垂类热门</h4>
+              <p>在有限预算下完成创作者筛选、brief 共创、上线跟进和数据复盘。</p>
+              <div class="tags">
+                <span class="tag highlight">4 条热门</span>
+                <span class="tag highlight">520K 最高播放</span>
+                <span class="tag">24 位创作者</span>
+              </div>
+            </div>
+            <div class="experience-points">
+              <div class="point"><strong>场景</strong><span>新产品需要在目标平台建立早期认知，但内容预算和品牌素材都有限。</span></div>
+              <div class="point"><strong>行动</strong><span>按受众重合度和内容稳定性筛选 24 位创作者，建立合作 brief 与周度数据看板。</span></div>
+              <div class="point"><strong>结果</strong><span>虚构案例中 4 条内容进入垂类热门，最高播放 520K，并沉淀可复用合作 SOP。</span></div>
+              <div class="point"><strong>对应 JD</strong><span>对应达人共创、平台内容判断和数据复盘能力。</span></div>
+            </div>
+          </article>
+
+          <article class="experience-card">
+            <div class="experience-meta">
+              <small>北辰 AI 研究社（虚构）· 行业研究项目</small>
+              <h4>建立生成式 AI 内容工具观察地图</h4>
+              <p>持续体验产品、追踪平台趋势，并把研究结论转成可使用的内容主题。</p>
+              <div class="tags">
+                <span class="tag highlight">32 份简报</span>
+                <span class="tag highlight">16 个赛道</span>
+                <span class="tag">趋势判断</span>
+              </div>
+            </div>
+            <div class="experience-points">
+              <div class="point"><strong>场景</strong><span>团队需要建立对生成式 AI 内容工具的持续认知，而不是被单次热点牵着走。</span></div>
+              <div class="point"><strong>行动</strong><span>设计产品体验和趋势追踪框架，覆盖用户场景、增长路径与内容传播方式。</span></div>
+              <div class="point"><strong>结果</strong><span>产出 32 份虚构研究简报，并从中提炼 9 个可继续验证的内容方向。</span></div>
+              <div class="point"><strong>对应 JD</strong><span>证明能够从行业变化中提炼选题，而不是简单搬运热点。</span></div>
+            </div>
           </article>
         </div>
       </section>
 
-      <section id="fit">
-        <div class="section-head">
-          <h3>岗位适配</h3>
-          <span>JD 要求 → 经历证据</span>
+      <section id="positioning">
+        <div class="section-head"><h3>个人定位</h3></div>
+        <div class="quote-block" style="margin-bottom: 12px;">
+          <p>一个会研究、会制作、也会复盘的 AI-native 内容增长候选人：既理解工具能力边界，也能把判断变成用户看得懂的内容。</p>
         </div>
-        <div class="grid">
-          <article><small>用户洞察</small><h4>从行为而不是偏好出发</h4><p>访谈、任务测试和使用数据相互校验，避免只依据用户口头表达做判断。</p></article>
-          <article><small>产品分析</small><h4>能把结论推进到下一步</h4><p>竞品拆解最终落到目标用户、关键场景、方案取舍和验证指标。</p></article>
-          <article><small>快速学习</small><h4>两周建立陌生领域地图</h4><p>通过产品体验、专家访谈和公开资料，快速形成问题框架与待验证假设。</p></article>
-          <article><small>协作交付</small><h4>让研究结果可被团队使用</h4><p>把洞察整理为优先级、原型说明和验收标准，而不是停留在研究报告。</p></article>
-        </div>
-      </section>
-
-      <section id="projects">
-        <div class="section-head">
-          <h3>项目展示</h3>
-          <span>面试追问时快速打开</span>
-        </div>
-        <div class="grid">
-          <article>
-            <small>AI 学习助手</small>
-            <h4>从 42 次访谈到交互原型</h4>
-            <p>展示研究框架、关键洞察、方案取舍与第二轮可用性测试结果。</p>
-            <a class="project-link" href="#projects">查看项目摘要 ↗</a>
-          </article>
-          <article>
-            <small>行业研究</small>
-            <h4>AI 笔记工具竞争地图</h4>
-            <p>比较 18 款产品的用户场景、工作流嵌入方式与留存机制。</p>
-            <a class="project-link" href="#projects">打开研究报告 ↗</a>
-          </article>
+        <div class="pos-grid">
+          <article class="pos-card"><small>AI 工具深度</small><h4>从使用工具走向设计工作流</h4><p>用 AI 编程和 Agent 工具连接信息采集、内容生成、人工校验与数据复盘。</p></article>
+          <article class="pos-card"><small>内容增长实战</small><h4>对选题、制作和分发负责</h4><p>能够从用户需求出发完成内容全流程，并用数据判断什么值得继续投入。</p></article>
+          <article class="pos-card"><small>行业研究</small><h4>从变化中提炼内容机会</h4><p>持续体验 AI 产品，把零散更新放回行业地图，形成有依据的选题判断。</p></article>
+          <article class="pos-card"><small>从 0 到 1</small><h4>让想法形成可验证产出</h4><p>每段案例都包含问题、行动、结果与下一轮迭代，而不是停留在概念展示。</p></article>
         </div>
       </section>
 
-      <section id="contribution">
-        <div class="section-head">
-          <h3>加入团队后的贡献</h3>
-          <span>基于已有能力，不做夸张承诺</span>
-        </div>
-        <div class="grid">
-          <article><h4>补充一线用户证据</h4><p>快速建立访谈、体验测试和反馈归因机制，让讨论回到真实使用场景。</p></article>
-          <article><h4>提高研究到产品的转化率</h4><p>把洞察继续推进为方案、指标和验证计划，缩短团队从问题到实验的距离。</p></article>
+      <section id="why-team">
+        <div class="section-head"><h3>想加入团队的原因</h3></div>
+        <div class="why-titles">
+          <div class="why-title-item"><small>作为用户</small><h4>长期使用 AI 产品，理解真实体验差异</h4></div>
+          <div class="why-title-item"><small>作为内容人</small><h4>能把技术变化翻译成用户愿意理解的内容</h4></div>
+          <div class="why-title-item"><small>作为建设者</small><h4>愿意亲手搭工作流，把判断推进到交付</h4></div>
         </div>
       </section>
 
-      <p class="note">本页面为 NOgap 功能演示。人物、公司、经历、数字与项目均为虚构信息。</p>
+      <p class="footnote">NOgap 功能演示：人物、学校、公司、经历、项目、数字与结果均为虚构信息。</p>
     </div>
   </main>
 </body>
