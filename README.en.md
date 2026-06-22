@@ -10,15 +10,19 @@ The current version is designed around mainland China's job descriptions, resume
 
 ## The Problem
 
-For people without full-time work experience, the challenge is rarely just resume wording. They often need to determine:
+NOgap grew out of the job-search experience shared by me and many young people around me. The difficulty is not only getting a resume seen or surviving the final interview. It is the often invisible **cognitive and capability gap** between a candidate and the role they care about most.
 
-- whether a role is genuinely worth pursuing
-- whether a mismatch is a communication problem or a real skill gap
-- what to learn first and what “good enough” looks like
-- how to prepare for interviews without starting from zero each time
-- how to turn rejection and weak answers into reusable learning
+Most career products optimize discovery and application volume. For people with little or no full-time experience, the more important questions are:
 
-NOgap connects those decisions into one workflow:
+- Do I actually understand what this role is trying to accomplish and what kind of person it needs?
+- What exactly separates me from the role I want?
+- Which gaps are communication problems, and which are real capability gaps?
+- Which capability should I build first, and how can I turn it into visible evidence?
+- How can each application, preparation cycle, and interview improve the next one?
+
+Applying for a role is not only a submission task. It is a process of learning, training, and iteration.
+
+NOgap therefore connects those decisions into one workflow:
 
 ```text
 Role evaluation
@@ -44,6 +48,97 @@ New gaps feed the next action plan
 | `interview-review` | Learn from an actual interview | Five-part review, newly exposed gaps, next actions |
 
 Each Mode writes a standalone Markdown document. Outputs for the same job share a three-digit ID beginning with `000`.
+
+## What Each Mode Produces
+
+<details>
+<summary><strong>1. brief: decide whether the role deserves deeper investment</strong></summary>
+
+`brief` compares the JD with evidence from the candidate's real experience and produces:
+
+1. **A | Role overview**: function, domain, level, location, team, core responsibilities, and the kind of person the role truly needs.
+2. **B | Resume fit**: requirement-by-requirement mapping to evidence in `cv.md`, separating direct matches, transferable experience, and missing proof.
+3. **Initial gaps**: hard gaps, bonus gaps, substitute evidence, and portfolio material to add.
+4. **Score and recommendation**: a 1–5 fit score followed by the most useful next step.
+
+The conclusions are written back to the numbered JD record so later modes can reuse the same analysis.
+
+</details>
+
+<details>
+<summary><strong>2. cv-tailor: express existing value fully without crossing the truth boundary</strong></summary>
+
+`cv-tailor` rebuilds the application narrative rather than merely replacing keywords:
+
+1. **Candidate level**: level fit and the three to five strongest advantages.
+2. **JD talent profile**: critical abilities, preferred experience patterns, recurring language, and differentiation opportunities.
+3. **Experience classification**: directly relevant, indirectly transferable, or contextual support.
+4. **Line-by-line rewrite**: original statement, revised statement, factual basis, and transferable value.
+5. **Overall narrative**: resume storyline, central proof point, and priority of each experience.
+
+Its boundary is explicit: **make the boldest competitive restatement supported by existing facts, but never invent a project, responsibility, metric, or result.** Every revision must trace back to `cv.md` and remain defensible in an interview.
+
+</details>
+
+<details>
+<summary><strong>3. gap-roadmap: identify the capability with the highest return on effort</strong></summary>
+
+`gap-roadmap` separates wording gaps from real capability gaps, then prioritizes them by **role impact × cost to close**. It produces:
+
+1. **Existing assets**: current abilities, transferable experience, and reusable projects.
+2. **A four-quadrant gap map**: fix now, schedule next, take the low-cost win, or deliberately defer.
+3. **Three to five action paths**: timing, concrete steps, completion criteria, and an artifact that can become evidence.
+4. **Current learning resources**: web-researched tutorials selected for authority, usefulness, and reputation.
+5. **Substitutes for gaps that cannot be closed quickly**: an honest plan for handling them in a portfolio or interview.
+
+Instead of saying “learn LLMs,” it may ask the user to understand how LLMs are trained, what structural errors those methods create, and how to demonstrate that understanding through a small experiment.
+
+</details>
+
+<details>
+<summary><strong>4. interview-prep: understand the company and why the interview asks what it asks</strong></summary>
+
+`interview-prep` avoids generic question banks. It generates:
+
+1. **Gap reminder**: the most interview-relevant items from `gap-roadmap`.
+2. **Company and market research**: current research on ecosystem position, product and business model, competitors, recent moves, and strategic direction, followed by an inference about why the company needs this role.
+3. **Four personalized question boards**: industry fundamentals, industry trends, personal capability depth, and project execution or experience verification.
+4. **Question analysis**: probability, difficulty, interviewer intent, and answer direction.
+5. **P0–P2 preparation list**: five to eight actions ordered by urgency.
+6. **STAR story breakdowns**: two to three core experiences structured as Situation, Task, Action, and Result.
+
+The objective is not to memorize polished answers. It is to understand where the company is going and which judgments and evidence to bring into the conversation.
+
+</details>
+
+<details>
+<summary><strong>5. interview-strategy: turn core experience into evidence that can be spoken and shown</strong></summary>
+
+`interview-strategy` uses a two-stage workflow. Before generating a site, it confirms the experiences to emphasize, personal and interview theme colors, selected sections, detail level, visual style, speaking time, and project files or links.
+
+It then produces:
+
+1. **Spoken introduction**: a concise, role-specific opening of roughly 100 Chinese characters that establishes who the candidate is, why they fit, and what deserves follow-up.
+2. **Clean interview presentation site**: a shareable standalone HTML page that supports the conversation without becoming a script full of paragraphs.
+
+The page can present positioning, experience context/actions/results/JD relevance, projects and demos, metrics, methods, workflows, screenshots, and potential team contributions. The final page contains no generation controls. Important visuals receive large display areas, and local assets use relative paths for private, portable sharing.
+
+</details>
+
+<details>
+<summary><strong>6. interview-review: make one interview improve the next one</strong></summary>
+
+`interview-review` checks transcript quality, then reviews five dimensions:
+
+1. **Answer structure**: clarity, focus, completeness, and evidence order.
+2. **Content quality and truthfulness**: specific actions, judgments, outcomes, and verifiable detail.
+3. **JD coverage**: whether the role's most important capabilities were demonstrated.
+4. **Exposed capability gaps**: missing knowledge, experience, or judgment revealed by weak answers.
+5. **Communication**: pace, redundancy, avoidance, follow-up handling, and interaction quality.
+
+Every finding cites transcript evidence and includes a concrete next action. New gaps flow into `data/gap-backlog.md`; missing question types can be added to interview preparation. Resume facts surfaced in the interview generate recommendations only and **never trigger an automatic edit to `cv.md`**. The report ends with the three highest-priority improvements.
+
+</details>
 
 ## Product Preview
 
@@ -210,6 +305,10 @@ This keeps every Mode independently callable without pretending that missing ups
 ### Quality Over Volume
 
 NOgap never submits applications for the user and does not encourage indiscriminate applying. Its purpose is to help users invest effort in opportunities that are more relevant and more real.
+
+### Restraint Defines the Product Boundary
+
+NOgap deliberately removed features outside its core journey and keeps only the six steps from **understanding a JD and preparing an application to reviewing an interview**. It is not trying to become a career platform that does everything at 60%. It aims to serve one important journey deeply: helping young candidates learn, practice, build evidence, and improve.
 
 ### Learning Must Feed Back
 
