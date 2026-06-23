@@ -152,7 +152,7 @@ The following fictional demo uses the latest `#002 interview-strategy` page stru
 
 <img src="docs/assets/interview-strategy-demo-mobile.jpg" alt="NOgap Interview Strategy mobile demo" width="360">
 
-[Open the demo HTML](docs/demo/interview-strategy-demo.html)
+[Open the interactive demo](https://claudyahhh.github.io/NOgap/demo/interview-strategy-demo.html) · [View the HTML source](docs/demo/interview-strategy-demo.html)
 
 ## Quick Start
 
